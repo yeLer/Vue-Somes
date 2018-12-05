@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Title</title>
+  <script type="text/javascript" src="../lib/vue-2.4.0.js"></script>
+  <style>
+    .active-link{
+      background: #21DEEF;
+      padding: 5px 3px;
+      border-radius: 6px;
+      color: #fff;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <!-- 迭代普通数组，带索引 -->
+    <p v-for="(item,index) in list1" :key="item.id">
+      <a href="" @click.prevent="choose(item)" :class="{'active-link':item.id === isActive }">{{item.name}}</a>
+    </p>
+    <hr>
+  </div>
+  <script>
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        msg: 'Vue',
+        isActive: 1,
+        list1: [
+          { id: 1, name: '老王' },
+          { id: 2, name: '老李' },
+          { id: 3, name: '老赵' },
+          { id: 4, name: '老张' }
+        ]
+      },
+      methods: {
+        choose(item){
+          this.isActive = item.id;
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

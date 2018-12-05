@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Title</title>
+  <script type="text/javascript" src="../lib/vue-2.4.0.js"></script>
+  <style>
+    
+  </style>
+</head>
+<body>
+  <div id="app">
+    
+  </div>
+
+  <template id="tmpl">
+    <div>
+      <h4>好用,不错!</h4>
+    </div>
+  </template>
+
+  <script>
+
+    var login={
+      template : "#tmpl"
+    }
+    var vm = new Vue({
+    el: '#app', 
+      data: {
+        msg: 'Vue'
+      },
+      methods: {
+        
+      },
+      render: function (createElements) {  //createElements是一个方法，调用它能够把指定的组件模板渲染为html结构
+        //注意：这里return的结果，会替换页面中el指定的那个容器
+        return createElements(login)
+      }
+    })
+  </script>
+</body>
+</html>

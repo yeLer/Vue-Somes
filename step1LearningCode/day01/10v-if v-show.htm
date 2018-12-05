@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Title</title>
+  <script type="text/javascript" src="../lib/vue-2.4.0.js"></script>
+  <style>
+    
+  </style>
+</head>
+<body>
+  <div id="app">
+    <!-- v-if涉及对象的重新创建 -->
+    <h3 v-if="flag1" >v-if控制的元素</h3>
+    <input type="button" value="v-if" @click="flag1=!flag1">
+    <hr>
+    <!-- v-if涉及对象的显示与隐藏 -->
+    <h3 v-show="flag2" @click="flag2=!flag2">v-show控制的元素</h3>
+    <input type="button" value="v-show" @click="flag2=!flag2">
+  </div>
+  <script>
+    var vm = new Vue({
+    el: '#app', 
+      data: {
+        msg: 'Vue',
+        flag1:true,
+        flag2:true,
+      },
+      methods: {
+        
+      }
+    })
+  </script>
+</body>
+</html>

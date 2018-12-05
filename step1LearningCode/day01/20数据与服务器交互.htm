@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Title</title>
+  <link rel="stylesheet" href="../lib/bootstrap-3.3.7.css">
+  <script type="text/javascript" src="../lib/vue-2.4.0.js"></script>
+  <script src="../lib/vue-resource-1.3.4.js"></script>
+  <style>
+  </style>
+</head>
+<!-- 需要配合node-server的app.js运行 -->
+<body>
+  <div id="app">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">添加品牌</h3>
+      </div>
+      <div class="panel-body form-inline">
+        <label>
+          Id:
+          <input type="text" class="form-control" v-model="id">
+        </label>
+
+        <label>
+          Name:
+          <input type="text" class="form-control" v-model="name" @keyup.f2="jsonpAdd">
+        </label>
+
+        <!-- 在Vue中，使用事件绑定机制，为元素指定处理函数的时候，如果加了小括号，就可以给函数传参了 -->
+        <input type="button" value="添加" class="btn btn-primary" @click="jsonpAdd()">
+
+        <label>
+          搜索名称关键字：
+          <!-- 获取焦点指令,Vue当中的指令，都以v-开头 ,这里使用自定义指令v-focus,还可以传递参数-->
+          <input type="text" class="form-control" v-model="keywords" v-focus v-color="'blue'">
+        </label>
+      </div>
+    </div>
+
+    <table class="table table-bordered table-hover table-striped">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Name</th>
+          <th>Ctime</th>
+          <th>Operation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- 之前， v-for 中的数据，都是直接从 data 上的list中直接渲染过来的 -->
+        <!-- 现在， 我们自定义了一个 search 方法，同时，把 所有的关键字，通过传参的形式，传递给了 search 方法 -->
+        <!-- 在 search 方法内部，通过 执行 for 循环， 把所有符合 搜索关键字的数据，保存到 一个新数组中，返回 -->
+        <tr v-for="item in search(keywords)" :key="item.id">
+          <!-- <tr v-for="item in list" :key="item.id"> -->
+          <td>{{ item.id }}</td>
+          <td v-text="item.name"></td>
+          <td v-fontweight="600">{{ item.ctime | dataFormat()}}</td>
+          <td>
+            <a href="" @click.prevent="del(item.id)">删除</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <script>
+    // 自定义全局按键修饰符
+    Vue.config.keyCodes.f2 = 113;
+    // 设置域名根路径
+    Vue.http.options.root = 'http://127.0.0.1:3000'
+    // 全局启用emulateJSON
+    Vue.http.options.emulateJSON = true;
+    // 使用  Vue.directive() 定义全局的指令  v-focus
+    // 其中：参数1 ： 指令的名称，注意，在定义的时候，指令的名称前面，不需要加 v- 前缀, 
+    // 但是： 在调用的时候，必须 在指令名称前 加上 v- 前缀来进行调用
+    // 参数2： 是一个对象，这个对象身上，有一些指令相关的函数，这些函数可以在特定的阶段，执行相关的操作
+    Vue.directive('focus', {
+      bind: function (el) { // 每当指令绑定到元素上的时候，会立即执行这个 bind 函数，只执行一次
+        // 注意： 在每个 函数中，第一个参数，永远是 el ，表示 被绑定了指令的那个元素，这个 el 参数，是一个原生的JS对象
+        // 在元素 刚绑定了指令的时候，还没有 插入到 DOM中去，这时候，调用 focus 方法没有作用
+        //  因为，一个元素，只有插入DOM之后，才能获取焦点
+        // el.focus()
+      },
+      inserted: function (el) {  // inserted 表示元素 插入到DOM中的时候，会执行 inserted 函数【触发1次】
+        el.focus()
+        // 和JS行为有关的操作，最好在 inserted 中去执行，放置 JS行为不生效
+      },
+      updated: function (el) {  // 当VNode更新的时候，会执行 updated， 可能会触发多次
+
+      }
+    })
+
+    // 与样式有关的操作可以放到bind当中
+    Vue.directive('color', {
+      bind: function (el, binding) {
+        // el.style.color = 'red';
+        el.style.color = binding.value;
+      }
+    })
+
+    Vue.filter('dataFormat', function (dataStr, pattern = '') {
+      var dt = new Date(dataStr)
+      var y = dt.getFullYear()
+      var m = (dt.getMonth()).toString().padStart(2, '0')
+      var d = (dt.getDate()).toString().padStart(2, '0')
+
+      if (pattern.toLowerCase() === 'yyyy-mm-dd') {
+        return `${y}-${m}-${d}`
+      }
+      else {
+        var hh = (dt.getHours()).toString().padStart(2, '0')
+        var mm = (dt.getMinutes()).toString().padStart(2, '0')
+        var ss = (dt.getSeconds()).toString().padStart(2, '0')
+        return `${y}-${m}-${d} ${hh}:${mm}:${ss}`
+      }
+    })
+
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        msg: 'Vue',
+        id: '',
+        pattern: '',
+        name: '',
+        keywords: '', // 搜索的关键字
+        list: [
+          { id: 1, name: '奔驰', ctime: new Date() }  //给一条模拟数据
+        ]
+      },
+      created(){
+        this.jsonpAllList();
+      },
+      methods: {
+        jsonpAdd() {
+          var sendData={id:this.id,name:this.name,ctime:new Date()};
+          // 当填写的数据都不为空的时候
+          if (this.id != null && this.name != null) {
+            this.$http.jsonp('addList',{params : sendData}).then(function (res) {
+              if (result.body.status === 0) {
+                this.getAllList();
+                this.id = this.name = null;
+              }else{
+                alert('添加失败！')
+              }
+            });
+            
+          }
+        },
+        del(id) {
+          // 根据id找到删除数据的索引
+          var index = this.list.findIndex((item) => {
+            if (item.id == id) {
+              // 在 数组的方法中，如果 return true，就会立即终止这个数组的后续循环
+              return true
+            }
+          })
+          this.list.splice(index, 1);
+        },
+        search(keywords) {
+          return this.list.filter(item => {
+            // 注意 ： ES6中，为字符串提供了一个新方法，叫做  String.prototype.includes('要包含的字符串')
+            //  如果包含，则返回 true ，否则返回 false
+            //  contain
+            if (item.name.includes(keywords)) {
+              return item
+            }
+          })
+        },
+        jsonpAllList() { // 发起jsonp请求,获取所有的品牌列表
+          //  当发起jsonp请求之后， 通过 .then 来设置成功的回调函数
+          // this.$http.jsonp('http://127.0.0.1:3000/getscript').then(function (result) {
+          // getscript前面不能加/
+          this.$http.jsonp('getscript').then(function (result) {
+            // 通过 result.body 拿到服务器返回的成功的数据
+            var result = result.body
+            if (result.status === 0) {
+              this.list = result.message
+            }else{
+              alert("请求失败");
+            }
+          })
+        },
+      },
+      directives: {
+        // 自定义私有指令,指令名称为fontweight
+        'fontweight': {  //设置字体粗细
+          bind: function (el, binding) {
+            el.style.fontWeight = binding.value;
+          }
+        },
+        // 指令的简写形式
+        'fontsize': function (el, bindding) {// 注意：这个 function 等同于 把 代码写到了 bind 和 update 中去
+          el.style.fontSize = parseInt(bindding.value) + 'px';
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

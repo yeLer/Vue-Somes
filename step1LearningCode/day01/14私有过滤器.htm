@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Title</title>
+  <script type="text/javascript" src="../lib/vue-2.4.0.js"></script>
+  <style>
+    
+  </style>
+</head>
+<body>
+  <div id="app">
+    {{date | dataFormat()}}
+  </div>
+  <script>
+    var vm = new Vue({
+    el: '#app', 
+      data: {
+        msg: 'Vue',
+        date: new Date(),
+      },
+      methods: {
+        
+      },
+      // 定义私有过滤器，过滤器有两个条件  【过滤器名称和处理函数】
+      // 过滤器调用的时候采用就近原则，如果私有与全局名称一致，优先调用私有过滤器
+      filters:{
+        dataFormat:function(dataStr,pattern=''){
+          var dt = new Date(dataStr)
+          var y = dt.getFullYear()
+          // 两个字符位置的格式化，使用ES6的String方法特性
+          // var m = dt.getMonth()
+          // var d = dt.getDate()
+          // 填充为2位，缺失时用0填充
+          var m = (dt.getMonth()).toString().padStart(2,'0')
+          var d = (dt.getDate()).toString().padStart(2,'0')
+
+          if (pattern.toLowerCase() === 'yyyy-mm-dd') {
+            return `${y}-${m}-${d}`
+          }
+          else{
+            var hh = (dt.getHours()).toString().padStart(2,'0')
+            var mm = (dt.getMinutes()).toString().padStart(2,'0')
+            var ss = (dt.getSeconds()).toString().padStart(2,'0')
+            return `${y}-${m}-${d} ${hh}:${mm}:${ss}`
+          }
+        }
+      }
+    })
+  </script>
+</body>
+</html>

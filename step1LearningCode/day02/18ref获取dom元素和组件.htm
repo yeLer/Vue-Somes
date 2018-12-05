@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Title</title>
+  <script type="text/javascript" src="../lib/vue-2.4.0.js"></script>
+  <style>
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <input type="button" value="获取元素" @click="getElement" ref="mybtn">
+    <h2 ref="myh2">今天天气不错</h2>
+    <hr>
+    <login ref="mylogin"></login>
+  </div>
+  <script>
+    var login = {
+      template: '<h1>登录组件</h1>',
+      data() {
+        return {
+          msg: "son msg"
+        }
+      },
+      methods: {
+        show(arg) {
+          console.log("子组件的方法" + arg)
+        }
+      }
+    }
+
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        msg: 'Vue'
+      },
+      methods: {
+        getElement() {
+          //  ref  是 英文单词 【reference】   值类型 和 引用类型  referenceError
+          // 获取文本内容
+          // alert(this.$refs.myh2.innerText)
+          // 修改样式
+          // this.$refs.myh2.style.color = "red"
+          // 获取子组件的数据
+          // console.log(this.$refs.mylogin.msg)
+          // 调用子组件方法
+          this.$refs.mylogin.show(this.msg)
+        }
+      },
+      components: {
+        login
+      }
+    })
+  </script>
+</body>
+
+</html>

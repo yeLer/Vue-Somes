@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Title</title>
+  <script type="text/javascript" src="../lib/vue-2.4.0.js"></script>
+  <style>
+    .inner{
+      height: 150px;
+      background-color: pink;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div class="inner" @click="divhandler">
+      <input type="button" value="戳我" @click="btnhandler">
+      <!-- .stop阻止向父级标签的冒泡事件 -->
+      <input type="button" value="戳我" @click.stop="btnhandler">
+      <hr>
+      <a href="http://www.baidu.com" @click="link_to_baidu">有问题问百度</a>
+      <hr>
+      <!-- .prevent阻止标签的默认行为 -->
+      <a href="http://www.baidu.com" @click.prevent="link_to_baidu">有问题问百度</a>
+    </div>
+    <hr>
+    <!-- .capture从外向里调用事件 -->
+    <div class="inner" @click.capture="divhandler">
+      <input type="button" value="戳我" @click="btnhandler">
+    </div>
+    <hr>
+    <!-- .self事件只在自身元素触发 -->
+    <!-- .self 只会阻止自己身上冒泡行为的触发，并不会真正阻止 冒泡的行为 -->
+    <div class="inner" @click.self="divhandler">
+        <input type="button" value="戳我" @click="btnhandler">
+    </div>
+    <!-- .once只触发一次 -->
+    <a href="http://www.baidu.com" @click.prevent.once="link_to_baidu">有问题问百度</a>
+  </div>
+  <script>
+    var vm = new Vue({
+    el: '#app', 
+      data: {
+        msg: 'Vue'
+      },
+      methods:{
+        divhandler(){
+          console.log("div的点击事件");
+        },
+        btnhandler(){
+          console.log("btn的点击事件");
+        },
+        link_to_baidu(){
+          console.log("触发点击事件");
+        }
+      }
+    })
+  </script>
+</body>
+</html>

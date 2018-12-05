@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Title</title>
+  <script type="text/javascript" src="../lib/vue-2.4.0.js"></script>
+  <style>
+    
+  </style>
+</head>
+<body>
+  <div id="app">
+    <login></login>
+  </div>
+
+  <template id="tmpl2">
+    <h1>这是私有的 login 组件</h1>
+  </template>
+  <script>
+    var vm = new Vue({
+    el: '#app', 
+      data: {
+        msg: 'Vue'
+      },
+      methods: {
+        
+      },
+      components: { // 定义实例内部私有组件的,login是私有组件的名称
+        login: {
+          template: '#tmpl2'
+        }
+      },
+    })
+  </script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Title</title>
+  <script type="text/javascript" src="../lib/vue-2.4.0.js"></script>
+  <style>
+    
+  </style>
+</head>
+<body>
+  <div id="app">
+    <!-- 还是使用 标签形式,引入自己的组件 -->
+    <mycom2></mycom2>
+  </div>
+  <script>
+    // 1. 组件可以有自己的 data 数据
+    // 2. 组件的 data 和 实例的 data 有点不一样,实例中的 data 可以为一个对象,但是 组件中的 data 必须是一个方法
+    // 3. 组件中的 data 除了必须为一个方法之外,这个方法内部,还必须返回一个对象才行;
+    // 4. 组件中 的data 数据,使用方式,和实例中的 data 使用方式完全一样!!!
+    Vue.component('mycom2', {
+      template: '<div><h3>这是直接使用 Vue.component 创建出来的组件</h3><span>{{msg}}</span></div>',
+      
+      data:function(){
+        return{
+          msg:'我是一个组件'
+        }
+        
+      }
+    })
+
+    var vm = new Vue({
+    el: '#app', 
+      data: {
+        msg: 'Vue'
+      },
+      methods: {
+        
+      }
+    })
+  </script>
+</body>
+</html>

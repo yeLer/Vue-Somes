@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Title</title>
+  <script type="text/javascript" src="../lib/vue-2.4.0.js"></script>
+  <style>
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <h4>{{msg}}</h4>
+    <!-- v-model指令实现表单元素的双向数据绑定  注意：只能使用在表单元素上 -->
+    <input type="text" v-model="msg">
+    <hr>
+    <input type="text" v-model="n1">
+    <select v-model="opt">
+      <option value="+">+</option>
+      <option value="-">-</option>
+      <option value="*">*</option>
+      <option value="/">/</option>
+    </select>
+    <input type="text" v-model="n2">
+    <input type="button" value="=" v-on:click="calc()">
+    <input type="text" v-model="result">
+  </div>
+  <script>
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        msg: 'Vue',
+        n1: "",
+        n2: "",
+        opt: "+",
+        result: "",
+      },
+      methods: {
+        // 计算器计算的方法
+        calc() {
+          // n1 = parseInt(this.n1)
+          // n2 = parseInt(this.n2)
+          // switch (this.opt) {
+          //   case "+": this.result = n1 + n2;
+          //     break;
+          //   case "-": this.result = n1 - n2;
+          //     break;
+          //   case "*": this.result = n1 * n2;
+          //     break;
+          //   case "/": this.result = n1 / n2;
+          //     break;
+          //   default:
+          //     break;
+          // }
+          var codeStr = 'parseInt(this.n1)' + this.opt + 'parseInt(this.n2)'
+          this.result = eval(codeStr)
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Title</title>
+  <link rel="stylesheet" href="../lib/animate.css">
+  <script type="text/javascript" src="../lib/vue-2.4.0.js"></script>
+  <style>
+
+  </style>
+</head>
+<body>
+  <div id="app">
+    <input type="button" value="clickme" @click="flag=!flag">
+    <!--animated是必须指定的样式   jackInTheBox是进场风格，hinge是出场风格 可以在https://daneden.github.io/animate.css/选取 -->
+    <!-- <transition enter-active-class="animated jackInTheBox" leave-active-class="animated hinge">
+      <h1 v-if="flag">我是H3</h1>
+    </transition> -->
+
+    <!-- 还可以这样简写 ,:duration可以指定入场和离场动画的时长，单位：毫秒-->
+    <!-- <transition enter-active-class="jackInTheBox" leave-active-class="hinge" :duration="2000" > --> <!--统一指定--> 
+    <transition enter-active-class="jackInTheBox" 
+      leave-active-class="hinge" 
+      :duration= "{enter:5000,leave:2000}">
+        <h1 v-if="flag" class="animated">我是H3</h1>
+    </transition>
+    
+    
+  </div>
+  <script>
+    var vm = new Vue({
+    el: '#app', 
+      data: {
+        msg: 'Vue',
+        flag:false,
+        flag1:false,
+      },
+      methods: {
+        
+      }
+    })
+  </script>
+</body>
+</html>

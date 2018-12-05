@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Title</title>
+  <script type="text/javascript" src="../lib/vue-2.4.0.js"></script>
+  <style>
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <!-- 迭代普通数组 -->
+    <p v-for="item in list">{{item}}</p>
+    <hr>
+    <!-- 迭代普通数组，带索引 -->
+    <p v-for="(item,index) in list">{{index}}---{{item}}</p>
+    <hr>
+    <!-- 迭代对象数组 -->
+    <p v-for="(item,index) in list1">{{index}}---{{item.id}}---{{item.name}}</p>
+    <hr>
+    <!-- 迭代对象 -->
+    <p v-for="(value,key,index) in user">{{value}}---{{key}}---{{index}}</p>
+    <hr>
+    <!-- 迭代数字 -->
+    <p v-for="item in 10">{{item}}</p>
+    <div>====================================</div>
+    <div>
+      <label>ID:
+        <input type="text" v-model="qc_id">
+      </label>
+      <label>name:
+        <input type="text" v-model="qc_name">
+      </label>
+      <input type="button" value="添加" @click="add">
+    </div>
+    <p v-for="(item,index) in list2" :key="item.id">
+      <input type="checkbox">{{item.id}}--{{item.name}}
+    </p>
+  </div>
+  <script>
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        msg: 'Vue',
+        list: [1, 2, 3, 4, 5, 6],
+        list1: [
+          { id: 1, name: 'zhang' },
+          { id: 2, name: 'li' },
+          { id: 3, name: 'zhao' },
+          { id: 4, name: 'wang' }
+        ],
+        user: {
+          id: 1,
+          name: 'gentle man',
+          gender: 'man'
+        },
+        list2: [
+          { id: 1, name: '李斯' },
+          { id: 2, name: '嬴政' },
+          { id: 3, name: '赵高' },
+          { id: 4, name: '韩非' },
+          { id: 5, name: '荀子' }
+        ],
+        qc_id: '',
+        qc_name: '',
+      },
+      methods: {
+        add() {
+          // 向列表中添加内容,尾部添加
+          // this.list2.push({ id: this.qc_id, name: this.qc_name });
+          // 头部添加
+          this.list2.unshift({ id: this.qc_id, name: this.qc_name });
+          this.qc_name = this.qc_id = null;
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>
