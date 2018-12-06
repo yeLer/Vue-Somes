@@ -22,7 +22,7 @@
 
   +09 [vue的for循环v-for](/step1LearningCode/day01/09v-for.htm)
 
-  +10 [v-if v-show显示与隐藏](/step1LearningCode/day01/10v-if v-show.htm)
+  +10 [v-if v-show显示与隐藏](/step1LearningCode/day01/10v-if.v-show.htm)
 
   +11 [品牌案例列表的展示](/step1LearningCode/day01/11品牌案例.htm)
 
