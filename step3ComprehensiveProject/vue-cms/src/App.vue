@@ -48,6 +48,7 @@
 	padding-top: 40px;
 	// 水平超出页面部分隐藏
   overflow-x: hidden;
+	padding-bottom: 50px;
 }
 // 设置页面切换时的动画效果
 .v-enter {
