@@ -3,7 +3,7 @@
 ## step1 Learning Code
   + 这里记录了学习veu基础知识的代码结构
 
-#### 具体内容包括111
+#### 具体内容包括
   #### day01
   +01 [vue的基本结构](/step1LearningCode/day01/01vue基本结构.html)
 
