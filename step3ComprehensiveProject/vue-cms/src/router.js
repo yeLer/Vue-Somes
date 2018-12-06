@@ -15,6 +15,7 @@ var router = new VueRouter({
     { path: '/shopcar', component: ShopcarContainer },
     { path: '/search', component: SearchContainer }
   ],
+  // 当哪个路由被选中就会为其添加哪个类属性
   linkActiveClass: 'mui-active' // 覆盖默认的路由高亮的类，默认的类叫做 router-link-active
 })
 

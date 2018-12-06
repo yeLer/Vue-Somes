@@ -41,11 +41,15 @@
 
 
 <style lang="scss" scoped>
+.mint-header{
+	background-color:#f0ad4e;
+}
 .app-container {
-  padding-top: 40px;
+	padding-top: 40px;
+	// 水平超出页面部分隐藏
   overflow-x: hidden;
 }
-
+// 设置页面切换时的动画效果
 .v-enter {
   opacity: 0;
   transform: translateX(100%);

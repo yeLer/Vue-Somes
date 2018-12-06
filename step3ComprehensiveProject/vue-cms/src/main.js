@@ -4,11 +4,14 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 // 1.2 安装路由
 Vue.use(VueRouter)
+// 1.3 导入自己的 router.js 路由模块
+import router from './router.js'
 
 // 2.1 导入 vue-resource
 import VueResource from 'vue-resource'
 // 2.2 安装 vue-resource
 Vue.use(VueResource)
+
 
 // 导入 MUI 的样式
 import './lib/mui/css/mui.min.css'
@@ -21,9 +24,6 @@ Vue.component(Header.name, Header)
 Vue.component(Swipe.name, Swipe)
 Vue.component(SwipeItem.name, SwipeItem)
 
-
-// 1.3 导入自己的 router.js 路由模块
-import router from './router.js'
 
 // 导入 App 根组件
 import app from './App.vue'
