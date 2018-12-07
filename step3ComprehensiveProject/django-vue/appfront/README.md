@@ -1,17 +1,17 @@
 # appfront
 
-> A Vue.js project
+> 这是一个使用vue-cli构建的vue前端部分
 
 ## Build Setup
 
 ``` bash
-# install dependencies
-npm install
+# install dependencies(安装基本依赖)
+cnpm install
 
-# serve with hot reload at localhost:8080
+# serve with hot reload at localhost:8080(开启服务)
 npm run dev
 
-# build for production with minification
+# build for production with minification(打包构建)
 npm run build
 
 # build for production and view the bundle analyzer report
