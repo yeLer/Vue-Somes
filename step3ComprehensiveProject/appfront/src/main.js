@@ -3,14 +3,15 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import ElementUI from 'element-ui'
 import VueResource from 'vue-resource'
-import 'element-ui/lib/theme-chalk/index.css'
 
 Vue.config.productionTip = false
 
-Vue.use(ElementUI)
 Vue.use(VueResource)
+
+// Set default values using the global configuration.
+Vue.http.options.root = 'http://127.0.0.1:8000/'
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
