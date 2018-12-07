@@ -3,18 +3,17 @@
 
     <!-- 轮播图区域 -->
     <!-- 在组件中，使用v-for循环的话，一定要使用 key -->
-    <!-- <mt-swipe :auto="4000">
-      <mt-swipe-item v-for="item in lunbotuList" :key="item.url">
-        <img :src="item.img" alt="">
-      </mt-swipe-item>
-    </mt-swipe> -->
-
     <mt-swipe :auto="4000">
-      <!-- 在组件中，使用v-for循环的话，一定要使用 key -->
+      <mt-swipe-item v-for="item in lunbotuList" :key="item.url">
+        <img :src="item.fields.img_url" alt="">
+      </mt-swipe-item>
+    </mt-swipe>
+
+    <!-- <mt-swipe :auto="4000">
       <mt-swipe-item><img src="../../images/homelunbo1.jpg"></mt-swipe-item>
       <mt-swipe-item><img src="../../images/homelunbo2.jpg"></mt-swipe-item>
       <mt-swipe-item><img src="../../images/homelunbo3.jpg"></mt-swipe-item>
-    </mt-swipe>
+    </mt-swipe> -->
 
     <!-- 九宫格 到 6宫格 的改造工程 -->
     <ul class="mui-table-view mui-grid-view mui-grid-9">
@@ -59,13 +58,12 @@ export default {
     };
   },
   created() {
-    // this.getLunbotu();
+    this.getLunbotu();
   },
   methods: {
     getLunbotu() {
       // 获取轮播图数据的方法
       this.$http.get("api/getlunbo").then(result => {
-        // console.log(result.body);
         if (result.body.status === 0) {
           // 成功了
           this.lunbotuList = result.body.message;
@@ -84,15 +82,15 @@ export default {
   height: 200px;
 
   .mint-swipe-item {
-    &:nth-child(1) {
-      background-color: red;
-    }
-    &:nth-child(2) {
-      background-color: blue;
-    }
-    &:nth-child(3) {
-      background-color: cyan;
-    }
+    // &:nth-child(1) {
+    //   background-color: red;
+    // }
+    // &:nth-child(2) {
+    //   background-color: blue;
+    // }
+    // &:nth-child(3) {
+    //   background-color: cyan;
+    // }
 
     img {
       width: 100%;

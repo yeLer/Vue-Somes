@@ -12,7 +12,7 @@ import VueResource from 'vue-resource'
 // 2.2 安装 vue-resource
 Vue.use(VueResource)
 // 全局配置vue-resource请求根路径
-Vue.http.options.root = 'http://vue.studyit.io/'
+Vue.http.options.root = 'http://127.0.0.1:8000/'
 
 // 定义全局过滤器
 Vue.filter('forMatTime',(dataStr,pattern='') =>{

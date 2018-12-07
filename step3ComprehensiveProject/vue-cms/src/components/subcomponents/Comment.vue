@@ -55,7 +55,7 @@ export default {
   methods: {
     getComments() {
       this.$http
-        .get("/api/getComments/" + this.id + "?pageindex=" + this.pageIndex)
+        .get("api/getComments/" + this.id + "?pageindex=" + this.pageIndex)
         .then(result => {
           if (result.body.status === 0) {
             // 如果获取评论列表成功

@@ -1,27 +1,14 @@
 <template>
   <div>
     <ul class="mui-table-view">
-				<!-- <li class="mui-table-view-cell mui-media">
-					<a href="javascript:;">
-						<img class="mui-media-object mui-pull-left" src="../../images/shuijiao.jpg">
-						<div class="mui-media-body">
-							<h4>能和心爱的人一起睡觉...</h4>
-              <p class='mui-ellipsis'>
-                <span>发表时间:{{time_date | forMatTime}}</span>
-                <span>浏览次数:{{read_times}}</span>
-              </p>
-						</div>
-					</a>
-				</li> -->
-
         <li class="mui-table-view-cell mui-media" v-for="item in news_list" :key="item.id">
-					<router-link :to="'/home/NewsInfo/'+item.id">
-						<img class="mui-media-object mui-pull-left" :src="item.img_src">
+					<router-link :to="'/home/NewsInfo/'+item.pk">
+						<img class="mui-media-object mui-pull-left" :src="item.fields.url_link">
 						<div class="mui-media-body">
-							<h4>{{item.title}}</h4>
+							<h4>{{item.fields.title}}</h4>
               <p class='mui-ellipsis'>
-                <span>发表时间:{{item.time_date | forMatTime}}</span>
-                <span>浏览次数:{{item.read_times}}</span>
+                <span>发表时间:{{item.fields.add_time | forMatTime}}</span>
+                <span>浏览次数:{{item.fields.click_times}}</span>
               </p>
 						</div>
 					</router-link>
@@ -38,32 +25,10 @@ export default {
   props: [""],
   data() {
     return {
-      news_list: [
-        {
-          id: 1,
-          title: "能和心爱的人一起睡觉...",
-          read_times: 0,
-          time_date: new Date(),
-          img_src: "/src/images/shuijiao.jpg"
-        },
-        {
-          id: 2,
-          title: "想要这样一间小木屋...",
-          read_times: 0,
-          time_date: new Date(),
-          img_src: "/src/images/muwu.jpg"
-        }
-      ]
+      news_list:[] //存放新闻列表
     };
   },
-
-  components: {},
-
-  computed: {},
-
-  beforeMount() {},
-
-  create() {
+  created() {
     this.getNewsList();
   },
 
@@ -74,6 +39,7 @@ export default {
         if (result.body.status === 0) {
           //如果没有失败，应该将数据到data上
           this.news_list = result.body.message;
+          // console.log(this.news_list)
         } else {
           Toast("获取新闻列表失败!");
         }
