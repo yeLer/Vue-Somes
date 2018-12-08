@@ -11,26 +11,12 @@ import router from './router.js'
 import VueResource from 'vue-resource'
 // 2.2 安装 vue-resource
 Vue.use(VueResource)
+
+
 // 全局配置vue-resource请求根路径
 Vue.http.options.root = 'http://127.0.0.1:8000/'
-
-// 定义全局过滤器
-Vue.filter('forMatTime',(dataStr,pattern='') =>{
-  var dt = new Date(dataStr)
-  var y = dt.getFullYear()
-  var m = (dt.getMonth()).toString().padStart(2,'0')
-  var d = (dt.getDate()).toString().padStart(2,'0')
-
-  if (pattern.toLowerCase() === 'yyyy-mm-dd') {
-    return `${y}-${m}-${d}`
-  }
-  else{
-    var hh = (dt.getHours()).toString().padStart(2,'0')
-    var mm = (dt.getMinutes()).toString().padStart(2,'0')
-    var ss = (dt.getSeconds()).toString().padStart(2,'0')
-    return `${y}-${m}-${d} ${hh}:${mm}:${ss}`
-  }
-})
+// 全局配置POST表单数据的组织形式
+Vue.http.options.emulateJSON = true
 
 // 导入 MUI 的样式
 import './lib/mui/css/mui.min.css'
@@ -38,12 +24,22 @@ import './lib/mui/css/mui.min.css'
 import './lib/mui/css/icons-extra.css'
 
 // 按需导入 Mint-UI 中的组件   
-import { Header, Swipe, SwipeItem,Button} from 'mint-ui'
-Vue.component(Header.name, Header)
-Vue.component(Swipe.name, Swipe)
-Vue.component(SwipeItem.name, SwipeItem)
-Vue.component(Button.name, Button)
+// import { Header, Swipe, SwipeItem, Button, Lazyload } from 'mint-ui'
+// Vue.component(Header.name, Header)
+// Vue.component(Swipe.name, Swipe)
+// Vue.component(SwipeItem.name, SwipeItem)
+// Vue.component(Button.name, Button)
+// Vue.use(Lazyload)
 
+//全局导入 
+import MintUI from 'mint-ui'
+Vue.use(MintUI)
+import 'mint-ui/lib/style.css'
+
+// 使用缩略图预览插件
+import VuePreview from 'vue-preview'
+// defalut install
+Vue.use(VuePreview)
 
 // 导入 App 根组件
 import app from './App.vue'
@@ -52,4 +48,22 @@ var vm = new Vue({
   el: '#app',
   render: c => c(app),
   router // 1.4 挂载路由对象到 VM 实例上
+})
+
+// 定义全局过滤器
+Vue.filter('forMatTime', (dataStr, pattern = '') => {
+  var dt = new Date(dataStr)
+  var y = dt.getFullYear()
+  var m = (dt.getMonth()).toString().padStart(2, '0')
+  var d = (dt.getDate()).toString().padStart(2, '0')
+
+  if (pattern.toLowerCase() === 'yyyy-mm-dd') {
+    return `${y}-${m}-${d}`
+  }
+  else {
+    var hh = (dt.getHours()).toString().padStart(2, '0')
+    var mm = (dt.getMinutes()).toString().padStart(2, '0')
+    var ss = (dt.getSeconds()).toString().padStart(2, '0')
+    return `${y}-${m}-${d} ${hh}:${mm}:${ss}`
+  }
 })

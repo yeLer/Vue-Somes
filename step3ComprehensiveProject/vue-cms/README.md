@@ -73,6 +73,56 @@
 
 3 为了防止新数据被覆盖的情况，我们在点击加载更多的情况下 应该让老数据拼接上新数据
 
+### 发表评论
+1 把文本框做双向数据绑定
+
+2 为发表按钮绑定一个事件
+
+3 校验评论内容是否为空，若为空 则用Toast提示用户评论内容不能为空
+
+4 通过vue-resources提交给服务器并存储
+
+5 当发表评论ok后，手动将添加的内容插入到列表的第一条，这样就不用请求服务了，要求显示在最顶部，以查看最新的评论
++ 如果调用getComments方法重新刷新评论列表的话，可能只能得到最后一页的评论，前面几页的可能获取不到
+
+
+### 改造图片分享按钮为 路由的链接并显示对应的组件页面
+
+### 绘制图片列表组件页面，并美化样式
+1 制作 顶部的滑动条
++ 需要借助于MUI的tab-top-webview-main.html
++ 需要把slider区域的mui-fullscreen类样式去掉
++ 滑动条无法正常触发滑动，通过检查官方文档  发现这是一个js的文件，需要手动初始化
+  + 导入mui.js
+  + 调用官方提供的初始化方式
+  ```
+  mui('.mui-scroll-wrapper').scroll({
+    deceleration: 0.0005 //flick 减速系数，系数越大，滚动速度越慢，滚动距离越小，默认值0.0006
+  });
+  ```
++ 初始化滑动条时，导入了mui.js  报错Uncaught TypeError: 'caller', 'callee', and 'arguments' properties may not be accessed on strict mode functions or the arguments objects for calls to them  
+  + 经过推测，可能是mui.js中使用了 'caller', 'callee', and 'arguments',但是webpack打包默认启用严格模式，这两者冲突了
+  + 解决方案：1 把mui.js的非严格模式的代码改掉，但是不是很现实   2 把webpack打包时候的严格模式禁用 [移除方法-->移除严格模式](https://github.com/yeLer/Vue-Somes/blob/master/vue%E7%AC%94%E8%AE%B0/day8.md)
++ 刚进入图片分享页面的时候，滑动条无法正常工作，发现如果要初始化滚动条  需要等到DOM元素加载完毕   所以需要把初始化半岛mounted函数中
+
++ 解决tab-bar无法切换的问题,需要将下面的四个类样式拷出来重新起类名，即将mui-tab-item名称重命名
+
++ 获取所有分类，并得到分类列表
+
+2 制作底部的滑动列表
++ 图片列表需要使用懒加载技术，可以使用mint-ui提供的lazy-load
++ 根据lazy-load的文档  使用
++ 渲染图片列表数据
+
+### 实现了 点击图片  跳转到图片详情页面
++ 在改造li成 router-link 的时候，需要使用tag属性指定需要渲染为哪种元素
+
+### 实现详情页面的布局和美化，同时获取数据  渲染页面
+
+###图片缩略图预览
++ 使用插件 `cnpm i vue-preview -S` 完成这个功能
++ 获取所有的图片列表，使用vue-preview渲染
+
 ## 如何使用
 
   + 1 使用cnpm安装依赖包 `cnpm i`

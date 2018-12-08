@@ -4,7 +4,7 @@
     <h3 class="title">{{newsInfo.title}}</h3>
     <p class="sub-title">
       <span>发表时间:{{newsInfo.add_time|forMatTime}}</span>
-      <span>点击:{{newsInfo.add_time}}次</span>
+      <span>点击:{{newsInfo.click_times}}次</span>
     </p>
     <!-- 内容 -->
     <div class="news-content" v-html="newsInfo.content"></div>
