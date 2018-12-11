@@ -123,6 +123,20 @@
 + 使用插件 `cnpm i vue-preview -S` 完成这个功能
 + 获取所有的图片列表，使用vue-preview渲染
 
+## 绘制商品列表页面基本结构
+
+##尝试在手机上  进行项目的预览与调试
++ 1 保证自己的手机可以正常运行
++ 2 保证手机和电脑处于同一个wifi环境，也就是手机可以访问到电脑的ip
++ 3 打开pakage.json文件，"dev": "webpack-dev-server --open --port 3000 --hot"  添加一个--host指令
+  + 如何查看电脑的ip cmd 输入ipconfig命令
+  + 我添加后的是"dev": "webpack-dev-server --open --port 3000 --hot --host 192.168.12.165"
+
+## 为了避免组件之间传值的繁琐
++ 使用vuex进行状态管理，将数据进行统一管理
++ 安装vuex  `cnpm i vuex -S`
++ 注册vuex  
+
 ## 如何使用
 
   + 1 使用cnpm安装依赖包 `cnpm i`

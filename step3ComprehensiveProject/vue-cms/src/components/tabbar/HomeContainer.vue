@@ -2,18 +2,9 @@
   <div>
 
     <!-- 轮播图区域 -->
-    <!-- 在组件中，使用v-for循环的话，一定要使用 key -->
-    <mt-swipe :auto="4000">
-      <mt-swipe-item v-for="item in lunbotuList" :key="item.url">
-        <img :src="item.fields.img_url" alt="">
-      </mt-swipe-item>
-    </mt-swipe>
-
-    <!-- <mt-swipe :auto="4000">
-      <mt-swipe-item><img src="../../images/homelunbo1.jpg"></mt-swipe-item>
-      <mt-swipe-item><img src="../../images/homelunbo2.jpg"></mt-swipe-item>
-      <mt-swipe-item><img src="../../images/homelunbo3.jpg"></mt-swipe-item>
-    </mt-swipe> -->
+    <!-- :lunbotuList会将数据传输到子组件的lunbotuList  -->
+    <!-- :isfull="true"表示手动设定宽度为100% -->
+    <my-swiper :lunbotuList="lunbotuList" :isfull="true"></my-swiper>
 
     <!-- 九宫格 到 6宫格 的改造工程 -->
     <ul class="mui-table-view mui-grid-view mui-grid-9">
@@ -30,9 +21,11 @@
         </router-link>
       </li>
       <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-        <a href="#">
+        <router-link to="/home/goodsList">
           <img src="../../images/menu3.png" alt="">
-          <div class="mui-media-body">商品购买</div></a></li>
+          <div class="mui-media-body">商品购买</div>
+        </router-link>
+      </li>
       <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
         <a href="#">
           <img src="../../images/menu4.png" alt="">
@@ -52,8 +45,25 @@
 
 <script>
 import { Toast } from "mint-ui";
+// 第一步导入
+import Swiper from "../subcomponents/Swiper.vue";
 
 export default {
+  // 在components节点注册
+  components: {
+    "my-swiper": Swiper
+  },
+
+  computed: {},
+
+  beforeMount() {},
+
+  created() {},
+
+  methods: {},
+
+  watch: {},
+
   data() {
     return {
       lunbotuList: [] // 保存轮播图的数组
@@ -68,7 +78,10 @@ export default {
       this.$http.get("api/getlunbo").then(result => {
         if (result.body.status === 0) {
           // 成功了
-          this.lunbotuList = result.body.message;
+          result.body.message.forEach(element => {
+            var img_url = element.fields.img_url
+            this.lunbotuList.push({"img_url":img_url})
+          });
         } else {
           // 失败的
           Toast("加载轮播图失败。。。");
@@ -80,27 +93,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.mint-swipe {
-  height: 200px;
-
-  .mint-swipe-item {
-    // &:nth-child(1) {
-    //   background-color: red;
-    // }
-    // &:nth-child(2) {
-    //   background-color: blue;
-    // }
-    // &:nth-child(3) {
-    //   background-color: cyan;
-    // }
-
-    img {
-      width: 100%;
-      height: 100%;
-    }
-  }
-}
-
 .mui-grid-view.mui-grid-9 {
   background-color: #fff;
   border: none;
@@ -109,7 +101,7 @@ export default {
     height: 60px;
   }
 
-  .mui-media-body{
+  .mui-media-body {
     font-size: 13px;
   }
 }

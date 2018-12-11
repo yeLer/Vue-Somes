@@ -4,11 +4,12 @@
     <div id="slider" class="mui-slider">
       <div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
         <div class="mui-scroll">
+          <!-- tap只有mui组件能使用 -->
           <a :class="['mui-control-item', item.pk ==0 ?'mui-active':'']" 
               v-for="item in ImageCategory" 
               :key="item.pk"
               href=""
-              @click.prevent="getPhotoListByCategoryId(item.pk)"
+              @tap.prevent="getPhotoListByCategoryId(item.pk)"
               >
             {{item.fields.title}}
           </a>

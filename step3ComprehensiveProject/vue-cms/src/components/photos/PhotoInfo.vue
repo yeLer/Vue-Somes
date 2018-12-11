@@ -2,14 +2,14 @@
   <div class="photoinfo-container">
     <h3>{{photoinfo.title}}</h3>
     <p class="subtitle">
-      <span>发表时间:{{photoinfo.add_time | forMatTime}}</span>
+      <span>发表时间:{{photoinfo.add_time|forMatTime}}</span>
       <span>点击{{photoinfo.click_times}}次</span>
     </p>
 
     <hr>
 
     <!-- 缩略图区域 -->
-    <vue-preview :slides="slides" @close="handleClose"></vue-preview>
+    <vue-preview :slides="photo_slides" @close="handleClose"></vue-preview>
 
     <!-- 图片内容区域 -->
     <div class="content" v-html="photoinfo.content">
@@ -31,25 +31,7 @@ export default {
       // 路由的id传参接收方法
       id: this.$route.params.id,
       photoinfo: { title: "", click_times: "", add_time: "", content: "" }, //图片详情对象
-      photo_slides:[], //存放图片缩略图的数组
-      slides: [
-          {
-            src: 'https://farm6.staticflickr.com/5591/15008867125_68a8ed88cc_b.jpg',
-            msrc: 'https://farm6.staticflickr.com/5591/15008867125_68a8ed88cc_m.jpg',
-            alt: 'picture1',
-            title: 'Image Caption 1',
-            w: 600,
-            h: 400
-          },
-          {
-            src: 'https://farm4.staticflickr.com/3902/14985871946_86abb8c56f_b.jpg',
-            msrc: 'https://farm4.staticflickr.com/3902/14985871946_86abb8c56f_m.jpg',
-            alt: 'picture2',
-            title: 'Image Caption 2',
-            w: 1200,
-            h: 900
-          }
-        ]
+      photo_slides: [] //存放图片缩略图的数组
     };
   },
 
@@ -64,7 +46,7 @@ export default {
 
   created() {
     this.getImageInfo();
-    // this.getThumbs()
+    this.getThumbs();
   },
 
   methods: {
@@ -87,26 +69,38 @@ export default {
         }
       });
     },
-    // 获取缩略图的列表
-    getThumbs(){
-      this.$http.get('api/getThumbs'+this.id).then(response=>{
+    // 获取详情页缩略图的列表
+    getThumbs() {
+      this.$http.get("api/getThumbs/" + this.id).then(response => {
         if (response.body.status === 0) {
-          console.log(response.body.message)
-          // 循环图片的数据，补全图片的宽和高
+          // console.log(response.body.message)
+          var slides = response.body.message;
+          // 循环图片的数据，补全图片的宽和高,把完整的数据补全到list中
           response.body.message.forEach(element => {
-            element.w = 600
-            element.h = 400
+            element.w = 600;
+            element.h = 400;
+            var src = element.fields.img_src;
+            var msrc = element.fields.img_msrc;
+            var alt = element.fields.alt;
+            var title = element.fields.title;
+            var obj = {
+              src: src,
+              msrc: msrc,
+              alt: alt,
+              title: title,
+              h: element.h,
+              w: element.w
+            };
+            this.photo_slides.push(obj);
           });
-          // 把完整的数据补全到list中
-          this.photo_slides = response.body.message
-        }else{
+        } else {
           Toast("获取缩略图失败");
         }
-      })
+      });
     },
     // 处理缩略图的关闭事件
-    handleClose () {
-      console.log('close event')
+    handleClose() {
+      console.log("close event");
     }
   },
 
@@ -135,13 +129,12 @@ export default {
       height: 100%;
     }
   }
-  .my-gallery{
-    figure{
-      img{
+  .my-gallery {
+    figure {
+      img {
         width: 120px;
         height: 120px;
       }
-      
     }
   }
 }
