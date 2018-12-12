@@ -3,7 +3,7 @@
 
     <!-- 顶部 Header 区域 -->
     <mt-header fixed title="Vue项目-内容管理系统">
-      <router-link to="/" slot="left">
+      <router-link to="" slot="left" v-show="flag">
         <mt-button icon="back" @click="goPage">返回</mt-button>
       </router-link>
       <!-- <mt-button icon="more" slot="right"></mt-button> -->
@@ -44,45 +44,56 @@
 
 <script>
 export default {
-    name:'',
-    props:[''],
-    data () {
-      return {
+  name: "",
+  props: [""],
+  data() {
+    return {
+      flag: false
+    };
+  },
 
-      };
-    },
+  components: {},
 
-    components: {},
+  computed: {},
 
-    computed: {},
+  beforeMount() {},
 
-    beforeMount() {},
+  created() {
+    // 页面创建的时候按钮显示的初始化
+    this.flag = this.$route.path === "/home" ? false : true;
+  },
 
-    created() {},
+  methods: {
+    goPage() {
+      this.$router.go(-1);
+    }
+  },
 
-    methods: {
-      goPage(){
-        this.$router.go(-1)
+  watch: {
+    // 监听url地址
+    "$route.path": function(newVal, oldVal) {
+      if (newVal === "/home") {
+        this.flag = false;
+      } else {
+        this.flag = true;
       }
-    },
-
-    watch: {}
-
+    }
   }
+};
 </script>
 
 
 <style lang="scss" scoped>
-.mint-header{
-	background-color:#f0ad4e;
+.mint-header {
+  background-color: #f0ad4e;
   // 是的header置于顶层
   z-index: 99;
 }
 .app-container {
-	padding-top: 40px;
-	// 水平超出页面部分隐藏
+  padding-top: 40px;
+  // 水平超出页面部分隐藏
   overflow-x: hidden;
-	padding-bottom: 50px;
+  padding-bottom: 50px;
 }
 // 设置页面切换时的动画效果
 .v-enter {
@@ -102,30 +113,30 @@ export default {
 }
 //改类名解决tab-bar无法切换的问题,需要将下面的四个类样式拷出来重新起类名
 .mui-tab-item-llb {
-    display: table-cell;
-    overflow: hidden;
-    width: 1%;
-    height: 50px;
-    text-align: center;
-    vertical-align: middle;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    color: #929292;
+  display: table-cell;
+  overflow: hidden;
+  width: 1%;
+  height: 50px;
+  text-align: center;
+  vertical-align: middle;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: #929292;
 }
 .mui-bar-tab .mui-tab-item-llb.mui-active {
-    color: #007aff;
+  color: #007aff;
 }
 .mui-bar-tab .mui-tab-item-llb .mui-icon {
-    top: 3px;
-    width: 24px;
-    height: 24px;
-    padding-top: 0;
-    padding-bottom: 0;
+  top: 3px;
+  width: 24px;
+  height: 24px;
+  padding-top: 0;
+  padding-bottom: 0;
 }
-.mui-bar-tab .mui-tab-item-llb .mui-icon~.mui-tab-label {
-    font-size: 11px;
-    display: block;
-    overflow: hidden;
-    text-overflow: ellipsis;
+.mui-bar-tab .mui-tab-item-llb .mui-icon ~ .mui-tab-label {
+  font-size: 11px;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>

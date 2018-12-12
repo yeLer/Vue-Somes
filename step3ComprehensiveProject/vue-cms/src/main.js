@@ -46,7 +46,7 @@ import Vuex from 'vuex'
 // 使用
 Vue.use(Vuex)
 // 每次进入网站  肯定会调用main.js的内容，先尝试从本地存储当中读取数据放入到store中，如果没有存在得到一个空数组
-var car = JSON.parse(localStorage.getItem('car'||'[]'))
+var car = JSON.parse(localStorage.getItem('car') || '[]')
 // 创建store实例
 var store = new Vuex.Store(
   {
@@ -82,11 +82,20 @@ var store = new Vuex.Store(
       // 相当于计算属性，也相当于过滤器
       getAllCount(state) {
         var c = 0
-        state.car.forEach(item => {
-          c += item.count
-        })
+        if (state.car) {
+          state.car.forEach(item => {
+            c += item.count
+          })
+        }
         return c
-      }
+      },
+      getGoodsCount(state) {
+        var o = {}
+        state.car.forEach(item => {
+          o[item.id] = item.count
+        })
+        return o
+      },
     }
   }
 )
