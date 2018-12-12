@@ -6,4 +6,4 @@
  + 前端和后台在独立的端口服务下运行
  + 使用vue-resources支持跨域请求
 
-#### vue-cms vue构建的内容管理系统
+#### django-vue-cms django后台与vue前端构建的内容管理系统
